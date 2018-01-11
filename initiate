@@ -30,4 +30,14 @@ echo 'Initializing shards'
 mongoExec mongos1 'sh.addShard("mongors1/mongors1n1:27017")'
 mongoExec mongos1 'sh.addShard("mongors2/mongors2n1:27017")'
 
+echo 'Creating admin user'
+mongoExec mongos1 'use admin
+db.createUser(
+  {
+    user: "mongo-admin",
+    pwd: "mongo-admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)'
+
 touch data/initiated
