@@ -14,21 +14,7 @@ In addition, also creates an admin user `mongo-admin/mongo-admin`.
  - This is designed to have a minimal disk footprint at the cost of durability.
  - This is designed in no way for production but as a cheap learning and exploration vehicle.
 
-## Installation (Debian base):
-
-### Install Docker
-
-    sudo apt-get install -y apparmor lxc cgroup-lite curl
-    wget -qO- https://get.docker.com/ | sh
-    sudo usermod -aG docker YourUserNameHere
-    sudo service docker restart
-
-### Install Docker-compose (1.4.2+)
-
-    sudo su
-    curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-    chmod +x /usr/local/bin/docker-compose
-    exit
+## Usage
 
 ### Check out the repository
 
@@ -46,9 +32,9 @@ You will need to run the following *once* only to initialize all replica sets an
 
     ./initiate
 
-You should now be able connect to mongos1 and the new sharded cluster from the mongos container itself using the mongo shell to connect to the running mongos process
+You should now be able connect to mongos1 and the new sharded cluster via mongCLI or any other client like Robo 3T
 
-    docker exec -it mongos1 mongo --port 21017
+    mongo localhost:27017 -u mongo-admin -p mongo-admin --authenticationDatabase admin
 
 ## Persistent storage
 Data is stored at `./data/` and is excluded from version control. Data will be persistent between container runs. To remove all data `./reset`
